@@ -1,0 +1,12 @@
+streamlit~=1.36.0
+pandas~=2.2.2
+numpy~=2.0.0
+matplotlib
+seaborn
+plotly
+statistics
+pyrebase
+reportlab
+fitz
+secure-smtplib
+mysql-connector
