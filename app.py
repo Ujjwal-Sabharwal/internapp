@@ -222,7 +222,7 @@ if st.session_state.admin:
         st.rerun()
  
 
-st.header('Hello')
+# st.header('Hello')
 
 if st.session_state.current_page == "Login":
     login_page()
