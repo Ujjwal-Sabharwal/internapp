@@ -7,7 +7,7 @@ import mysql.connector
 def insert_into_db(data):
     try:
         data1 = tuple(data)
-        connection = mysql.connector.connect(host='localhost',user='root',passwd='12345678',database='ujjwal')
+        connection = mysql.connector.connect(host='111.223.26.72',user='root',passwd='12345678',database='ujjwal')
         cursor = connection.cursor()
         query = """INSERT INTO data (academic_level, age_range, gender, family_member, anual_income, background,
                                                   influence_source, decision_factor, infra_importance, placement_importance,

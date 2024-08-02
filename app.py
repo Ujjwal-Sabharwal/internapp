@@ -9,7 +9,7 @@ import verification
 
 # Establish a connection to the MySQL database
 mydb = mysql.connector.connect(
-    host='localhost',
+    host='111.223.26.72',
     user='root',
     passwd='12345678',
     database='ujjwal'
