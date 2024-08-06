@@ -1,13 +1,20 @@
 import streamlit as st
 import mysql.connector
-
+import os
+from dotenv import load_dotenv
 
 
 # Function to insert data into MySQL database
 def insert_into_db(data):
+    load_dotenv()
+
+    db_host = os.getenv("DB_HOST")
+    db_user = os.getenv("DB_USER")
+    db_password = os.getenv("DB_PASSWORD")
+    db_name = os.getenv("DB_NAME")
     try:
         data1 = tuple(data)
-        connection = mysql.connector.connect(host='111.223.26.72',user='root',passwd='12345678',database='ujjwal')
+        connection = mysql.connector.connect(host=db_host,user=db_user,passwd=db_password,database=db_name)
         cursor = connection.cursor()
         query = """INSERT INTO data (academic_level, age_range, gender, family_member, anual_income, background,
                                                   influence_source, decision_factor, infra_importance, placement_importance,

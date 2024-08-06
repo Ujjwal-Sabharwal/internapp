@@ -7,7 +7,6 @@ plotly
 statistics
 pyrebase
 reportlab
-fitz
 secure-smtplib
 mysql-connector
-pymupdf
+python-dotenv

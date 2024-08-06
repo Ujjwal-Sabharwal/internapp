@@ -1,5 +1,7 @@
 import streamlit as st
 import mysql.connector
+import os
+from dotenv import load_dotenv
 import input
 import visulaization
 import swing
@@ -7,12 +9,20 @@ import user_profile
 import superuser
 import verification
 
+# Load environment variables from .env file
+load_dotenv()
+
+db_host = os.getenv("DB_HOST")
+db_user = os.getenv("DB_USER")
+db_password = os.getenv("DB_PASSWORD")
+db_name = os.getenv("DB_NAME")
+
 # Establish a connection to the MySQL database
 mydb = mysql.connector.connect(
-    host='111.223.26.72',
-    user='root',
-    passwd='12345678',
-    database='ujjwal'
+    host=db_host,
+    user=db_user,
+    passwd=db_password,
+    database=db_name
 )
 # Create a cursor object to interact with the database
 cursorObject = mydb.cursor()
@@ -83,7 +93,7 @@ def login_page():
 
                 # Verify the password
                 if passwd == stored_password:
-                    st.session_state.current_page = "admin"  # Redirect to 'input' page on successful login
+                    st.session_state.current_page = "admin-employees"
                     st.success('Login successful')
                     st.rerun()
                 else:
@@ -248,8 +258,10 @@ elif st.session_state.current_page == "esif":
     input.esif(clicked,st.session_state.email)
 elif st.session_state.current_page == "page":
     input.page(clicked)
-elif st.session_state.current_page == "admin":
-    superuser.show(clicked)
+elif st.session_state.current_page == "admin-employees":
+    superuser.employees(clicked)
+elif st.session_state.current_page == "admin-student":
+    superuser.student(clicked)
 elif st.session_state.current_page == "profile":
     user_profile.show(clicked,st.session_state.name,st.session_state.email)
 else:

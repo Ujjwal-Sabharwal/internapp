@@ -5,7 +5,6 @@ from reportlab.lib.units import inch
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
 import io
-import fitz
 import streamlit as st
 
 
@@ -45,13 +44,5 @@ def generate_pdf(data):
     doc.build(elements)
 
     buffer.seek(0)
-    return buffer
+    return buffer,table_data
 
-def display_pdf(pdf_buffer):
-    document = fitz.open("pdf", pdf_buffer)
-    num_pages = document.page_count
-    for page_num in range(num_pages):
-        page = document.load_page(page_num)
-        pix = page.get_pixmap()
-        image = pix.tobytes("png")
-        st.image(image)
