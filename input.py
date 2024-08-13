@@ -2,7 +2,7 @@ import streamlit as st
 import mysql.connector
 import os
 from dotenv import load_dotenv
-
+from mlModel import predict_mood
 
 # Function to insert data into MySQL database
 def insert_into_db(data):
@@ -19,8 +19,8 @@ def insert_into_db(data):
         query = """INSERT INTO data (academic_level, age_range, gender, family_member, anual_income, background,
                                                   influence_source, decision_factor, infra_importance, placement_importance,
                                                   info_source, support_frequency, confidence_level, guidance_support, knowledge_access,
-                                                  informed_level, emotional_state, future_goals, overallmood, email)
-                   VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
+                                                  informed_level, emotional_state, future_goals, overallmood, predicted, email)
+                   VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
         cursor.execute(query, data1)
         connection.commit()
     except mysql.connector.Error as err:
@@ -35,13 +35,12 @@ def dgif(function, name):
     st.header('Demographic Influencing Factors')
 
     DGIF1 = st.selectbox("Please Select Your Academic Level",
-                         (
-                         "Senior Secondary", "Under Graduate", "Post Graduate", "Professional", "Working Professional"),
+                         ("Senior Secondary", "Under Graduate", "Post Graduate", "Professional", "Working Professionals"),
                          index=None, placeholder="Select Academic Level...", key='DGIF1')
     st.write("You selected:", DGIF1)
 
     DGIF2 = st.selectbox("Please Select Your Age Range",
-                         ("Less Than 20", "More Than 25", "21-25"),
+                         ("21-25 Yrs.", "More than 25 Yrs.", "Less than 20 Yrs. "),
                          index=None, placeholder="Select your age...", key='DGIF2')
     st.write("You selected:", DGIF2)
 
@@ -83,7 +82,7 @@ def bif(function):
 
     BIF1 = st.selectbox("Please Select Who Influences You",
                         ("Family/Society", "Friends/Peer group", "Your own decision", "Teachers",
-                         "Subject Matter Expert(SME)"),
+                         "Subject Matter Expert (SME)"),
                         index=None, placeholder="Select who influences you...", key='BIF1')
     st.write("You selected:", BIF1)
 
@@ -123,7 +122,7 @@ def sgif(function):
 
     SGIF1 = st.selectbox("Please Select Your Source Of Information",
                          ("Academic Advisors", "Friends and Peers", "Online Resources", "Family Members",
-                          "Previous Students Experiences"),
+                          "Previous Students' Experiences"),
                          index=None, placeholder="Select your source of information...", key='SGIF1')
     st.write("You selected:", SGIF1)
 
@@ -192,8 +191,7 @@ def esif(function,email):
     st.write("You selected:", ESIF1)
 
     ESIF2 = st.selectbox("Please Select Your Future Goals",
-                         (
-                         "Recent Trends", "Family Professional Goals", "Financial Stability", "Hobbies/interest areas ",
+                         ("Recent Trends", "Family Professional Goals", "Financial Stability", "Hobbies/interest areas ",
                          "Career Preferences"),
                          index=None, placeholder="Select your goals...", key='ESIF2')
     st.write("You selected:", ESIF2)
@@ -234,6 +232,16 @@ def esif(function,email):
             st.session_state.data.get('ESIF1'),
             st.session_state.data.get('ESIF2'),
             st.session_state.data.get('ESIF3'),
+            predict_mood(st.session_state.data.get('DGIF1'),
+            st.session_state.data.get('DGIF2'),
+            st.session_state.data.get('DGIF3'),
+            st.session_state.data.get('DGIF4'),
+            st.session_state.data.get('DGIF5'),
+            st.session_state.data.get('BIF1'),
+            st.session_state.data.get('BIF2'),
+            st.session_state.data.get('SGIF1'),
+            st.session_state.data.get('IAIF1'),
+            st.session_state.data.get('ESIF2')),
             email
         ]
         insert_into_db(data)
@@ -244,5 +252,4 @@ def page(function):
     st.header('Response has been submitted successfully. Kindly log in to view your response.')
     if st.button('login', type='primary'):
         function('Login')
-
 

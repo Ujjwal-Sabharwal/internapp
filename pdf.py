@@ -1,11 +1,7 @@
-from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
 from reportlab.lib import colors
-from reportlab.lib.units import inch
-from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
 import io
-import streamlit as st
 
 
 def generate_pdf(data):
@@ -19,7 +15,7 @@ def generate_pdf(data):
         "Background", "Who influence", "Factor Influencing",
         "Infrastructure", "Placement", "Source of information", "Frequency of support",
         "Confidence Level", "Adequate support", "Access to information", "Awareness",
-        "Emotional state", "Future goal", "Overall mood"
+        "Emotional state", "Future goal", "Overall mood", "Predicted mood"
     ]
 
     # Create table data with an additional column for labels
