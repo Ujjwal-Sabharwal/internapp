@@ -2,7 +2,6 @@ import streamlit as st
 import mysql.connector
 import os
 from dotenv import load_dotenv
-from mlModel import predict_mood
 
 # Function to insert data into MySQL database
 def insert_into_db(data):
@@ -232,16 +231,7 @@ def esif(function,email):
             st.session_state.data.get('ESIF1'),
             st.session_state.data.get('ESIF2'),
             st.session_state.data.get('ESIF3'),
-            predict_mood(st.session_state.data.get('DGIF1'),
-            st.session_state.data.get('DGIF2'),
-            st.session_state.data.get('DGIF3'),
-            st.session_state.data.get('DGIF4'),
-            st.session_state.data.get('DGIF5'),
-            st.session_state.data.get('BIF1'),
-            st.session_state.data.get('BIF2'),
-            st.session_state.data.get('SGIF1'),
-            st.session_state.data.get('IAIF1'),
-            st.session_state.data.get('ESIF2')),
+            'happy',
             email
         ]
         insert_into_db(data)
